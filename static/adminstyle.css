@@ -1,0 +1,26 @@
+body {
+  background-color: white;
+}
+
+.logo {
+  width: 100px;
+  height: 100%;
+}
+
+td,
+tr {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.actionIcon {
+  width: 20px;
+  height: 100%;
+}
+
+.img-thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+  width: auto;
+  height: auto;
+}
