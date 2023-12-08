@@ -19,27 +19,31 @@ function listing() {
                 let file = articles[i]["file"];
 
                 temp_html += `
-                    <div class="col-lg-4 col-md-6 col-sm-6" style="width: 18rem;">
-                        <img src="${file}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <div class="card-desc">
-                                <h5 class="card-name">${Name}</h5>
-                                <span class="card-price">Rp. ${Price}</span>
-                                <span class="night-room">/Night/Room</span>
-                            </div>
-                            <div class="rat-btn">
-                                <div class="card-rating">
-                                    <img class="staricon" src="../static/assets/star.webp" alt="">
-                                    <img class="staricon" src="../static/assets/star.webp" alt="">
-                                    <img class="staricon" src="../static/assets/star.webp" alt="">
-                                    <img class="staricon" src="../static/assets/star.webp" alt="">
-                                    <img class="staricon" src="../static/assets/star.webp" alt="">
-                                    <span class="review-rating">4.9</span>
-                                </div>
-                                <a href="#" class="bookbtn">Book now</a>
-                            </div>
-                        </div>
+                <div class="col-lg-4 mb-4">
+                <div class="card">
+                  <img src="${file}" class="img-room">
+                  <div class="content d-flex justify-content-between align-items-end">
+                    <div class="desc">
+                      <h4 class="fw-bold">${Name}</h4>
+                      <div class="text-price">
+                      <p class="card-price">Rp ${Price}</p>
+                      <p class="card-price-desc">/Night/Room</p>
+                      </div>
+                      <div class="rating">
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <i class="fa-solid fa-star text-warning"></i>
+                        <p style="font-weight:bold">4,7</p>
+                      </div>
                     </div>
+                    <div>
+                      <button class="btn-booknow">Book Now</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 `;
             }
 

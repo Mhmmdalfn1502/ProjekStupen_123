@@ -39,10 +39,14 @@ body {
   background-color: #fff;
 }
 
+section {
+  margin: 100px 0px;
+}
+
 /* start navbar */
 .navbar {
   padding: 20px 0px;
-  backdrop-filter: blur(15px);
+  background-color: white;
 }
 
 .navbar .navbar-nav .nav-link {
@@ -68,6 +72,7 @@ body {
   color: #24ab70;
   font-weight: bold;
   border-radius: 25px;
+  text-decoration: none;
 }
 
 .auth .btn-SignUp {
@@ -108,7 +113,7 @@ header .img-header {
 }
 
 .booking .row.boxheader {
-  margin-top: -250px;
+  margin-top: -350px;
   padding: 20px;
   border-radius: 20px;
   height: auto;
@@ -122,11 +127,23 @@ header .img-header {
   gap: 15px;
 }
 
+.boxform label {
+  font-weight: bold;
+}
+
 .boxform input {
   border-radius: 10px;
   border: none;
   padding: 5px 10px;
   background-color: transparent;
+}
+
+.boxform select {
+  background-color: transparent;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .btn-book {
@@ -143,9 +160,13 @@ header .img-header {
 /* end header */
 
 /* Rooms */
-.rooms {
-  padding-top: 100px;
+
+.img-room {
+  width: 400px;
+  height: 267px;
+  object-fit: cover;
 }
+
 
 .rooms .card {
   background-color: #fff;
@@ -166,20 +187,46 @@ header .img-header {
   padding: 10px 35px;
   border-radius: 10px;
 }
+
 .rooms .card .content .btn-booknow:hover {
   background-color: #118855;
 }
+
+.rating {
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.card-price {
+  font-weight: bold;
+}
+
+.card-price-desc {
+  font-size: 12px;
+  color: #646464;
+}
+
+.text-price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+
 /* Rooms */
 
 /* Facilities */
+
 .facilities {
-  padding: 100px 0px;
+  margin: 50px 0px;
 }
 
 .faci-list-item {
   background-color: var(--primary-color);
   min-height: 180px;
-  box-shadow: 5px 5px 60px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 5px 5px 60px 0 rgba(28, 142, 77, 0.132);
   padding: 20px;
   border-radius: 25px;
   display: flex;
@@ -209,20 +256,113 @@ header .img-header {
   background-color: #118855;
 }
 
-
 /* Facilities */
-
 
 /* Start Gallery */
 
-.Gal-item {
+.Gal-teks h2 {
+  font-weight: bold;
+  color: #002403;
+}
+
+.Gal-teks p {
+  font-size: 16px;
+  color: #646464;
+}
+
+.zoom-wrapper {
+  height: 400px;
+  overflow: hidden;
   border-radius: 20px;
+  margin: 10px;
+}
+
+.zoom-wrapper .Gal-item {
+  object-fit: cover;
+  transition: transform 0.8s;
+  height: 100%;
+  width: 100%;
+}
+
+.zoom-wrapper:hover .Gal-item {
+  transform: scale(1.5);
+}
+
+.Gal-item {
+  padding: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  grid-auto-flow: dense;
+  grid-auto-rows: 250px;
+}
+
+.v-stretch {
+  grid-row: span 2;
+}
+
+.h-stretch {
+  grid-column: span 2;
+}
+
+.big-stretch {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+
+.Gal-item div img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
 /* End Gallery */
 
-/* Footer */
+
+/* Start Review */
+
+.Rev-teks p {
+  color: #646464;
+}
+
+.Rev-card {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 5px 5px 60px 0 rgba(28, 142, 77, 0.232);
+  gap: 10px;
+  padding: 15px;
+}
+
+.Rev-card-profile img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 2px solid #118855;
+}
+
+/* .Rev-card-name {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.Rev-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+} */
+
+.Rev-card-text p {
+  max-width: 100%;
+  color: #646464;
+}
+
+/* End Review */
+
+
+/* Start Footer */
 footer {
   background-color: #24ab70;
   padding: 50px 150px;
@@ -231,6 +371,13 @@ footer {
 footer p,
 li {
   color: white;
+}
+
+footer h4 {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
 
 .divmdsicon {

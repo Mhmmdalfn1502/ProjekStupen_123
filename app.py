@@ -11,12 +11,23 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('admin.html')
+    return render_template('index.html')
+
+# @app.route('/admin', methods=['GET'])
+# def show_Data_admin():
+#     articles = list(db.ListKamar.find({}, {'_id':False}))
+#     return jsonify({'admin.html': articles})
 
 @app.route('/admin', methods=['GET'])
 def show_Data():
     articles = list(db.ListKamar.find({}, {'_id':False}))
     return jsonify({'articles': articles})
+
+# @app.route('/', methods=['GET'])
+# def show_data_index():
+#     articles = list(db.ListKamar.find({}, {'_id': False}))
+#     return render_template('index.html', articles=articles)
+
 
 @app.route('/admin', methods=['POST'])
 def save_Data():
@@ -63,6 +74,10 @@ def delete_data(Name):
         return jsonify({'success': True})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
+    
+@app.route('/admin-page')
+def admin_page():
+    return render_template('admin.html')
 
 if __name__== '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
