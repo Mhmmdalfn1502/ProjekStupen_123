@@ -24,8 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+Osmanya&display=swap" rel="stylesheet" />
-
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                   
     <!-- adminstyle  -->
     <link rel="stylesheet" href="../static/adminstyle.css" />
     <title>Harmoy Resort</title>
@@ -35,8 +34,7 @@
         listing();
         bsCustomFileInput.init();
       });
-
-      function listing() {
+      function listing() {                                                                                                                            
         $.ajax({
           type: "GET",
           url: "/admin",
@@ -59,8 +57,8 @@
                         <td><img src="${file}" class="img-thumbnail" alt="Image"></td>
                         <td>
                             <button onclick="editItem('${Name}')" class="btn btn-warning" >
-                                <img class="actionIcon" src="../static/assets/edit.png" alt=""></button>
-                            <button onclick="deleteItem('${Name}')" class="btn btn-danger"><img class="actionIcon" src="../static/assets/delete.png" alt=""></button>
+                                <img class="actionIcon" src="../static/assets/img/edit.png" alt=""></button>
+                            <button onclick="deleteItem('${Name}')" class="btn btn-danger"><img class="actionIcon" src="../static/assets/img/delete.png" alt=""></button>
                         </td>
                     </tr>
                 `;
@@ -136,7 +134,7 @@
 
     <nav class="navbar">
       <div class="container">
-        <img class="logo" src="../static/assets/LogoHarmonyGolden.png" alt="" />
+        <img class="logo" src="../static/assets/img/LogoHarmonyGolden.png" alt="" />
         <span class="navbar-brand mx-auto" href="#" style="font-weight: bold"></span>
         <div class="navbar-text ml-auto">Hello, Admin</div>
       </div>
@@ -175,9 +173,11 @@
               <th>Actions</th>
             </tr>
           </thead>
+          
           <tbody id="table-body">
             <!-- Data akan ditampilkan di sini -->
           </tbody>
+          
         </table>
       </div>
       <!-- End Table -->
