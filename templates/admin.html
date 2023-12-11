@@ -133,7 +133,18 @@
       <div class="container">
         <img class="logo" src="../static/assets/img/LogoHarmonyGolden.png" alt="" />
         <span class="navbar-brand mx-auto" href="#" style="font-weight: bold"></span>
-        <div class="navbar-text ml-auto">Hello, Admin</div>
+        <div class="text-center auth">
+          {% if 'email' in session %}
+              <p class="user-profile">{{ session['first_name'] }} {{ session['last_name'] }}</p>
+              <a href="/logout" class="btn-SignOut">Sign Out</a>
+              {% if session['role'] == 'admin' %}
+                  <a href="/admin_page" class="btn-SignIn">Admin Page</a>
+              {% endif %}
+          {% else %}
+              <a href="/signin" class="btn-SignIn">Sign In</a>
+              <a href="/signup" class="btn-SignUp text-decoration-none">Sign Up</a>
+          {% endif %}
+      </div>
       </div>
     </nav>
 
