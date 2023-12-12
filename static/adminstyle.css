@@ -2,6 +2,14 @@ body {
   background-color: white;
 }
 
+
+.text-center {
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
 .logo {
   width: 100px;
   height: 100%;
@@ -22,4 +30,10 @@ td, tr {
   max-height: 100px;
   width: auto;
   height: auto;
+}
+
+.btn-SignOut {
+  color: #24ab70;
+  font-weight: bold;
+  text-decoration: none;
 }

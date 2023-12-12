@@ -15,7 +15,7 @@ users = [{"email": "user1", "password": "password1"}]
 
 @app.route('/')
 def home():
-    articles = list(db.ListKamar.find({}, {'_id': False}))
+    articles = list(db.ListKamar.find({}, {'_id': False}).sort('date_created',DESCENDING).limit(6))
     contacts = list(db.contacts.find().sort('date_created', DESCENDING).limit(4))  # Menggunakan metode limit(4) untuk membatasi jumlah data
     return render_template('index.html', articles=articles, contacts=contacts, email=session.get('email'))
 
@@ -35,7 +35,7 @@ def get_room_names():
     room_names = list(db.ListKamar.find({}, {'Name': 1, '_id': False}))
     return jsonify({'room_names': room_names})
 
-# CRUD
+# ------------------------------ CRUD ------------------------------ #
 
 # @app.route('/admin', methods=['GET'])
 # def show_Data_admin():
@@ -100,7 +100,7 @@ def check_admin_role():
 def admin_page():
     return render_template('admin.html')
     
-# SignUp and SignIn
+# ------------------------------ SignUp/SignIn/SignOut ------------------------------ #
 
 @app.route('/signup')
 def signup_page():
@@ -126,20 +126,18 @@ def signup():
             flash('Email is already registered. Please use a different email.', 'danger')
             return render_template('signup.html')
 
-        # Simpan informasi pengguna ke database (gunakan MongoDB atau penyimpanan lainnya)
         db.dataregis.insert_one({
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
             "password": password,
-            "role": "user"  # Menambahkan peran pengguna
+            "role": "user"  # Perannya sebagai User
         })
 
-        # Otentikasi pengguna (contoh sederhana)
+        # Otentikasi pengguna lewat email
         session['email'] = email
 
-        # Jika Anda ingin menentukan peran admin secara langsung di sini,
-        # sesuaikan logika berikut sesuai kebutuhan aplikasi Anda
+        # Jika SignUp/SignIn sebagai admin harus menggunakan email ini
         if email == "admin@HarmonyResort.com":
             session['role'] = "admin"
 
@@ -153,21 +151,20 @@ def signin():
         email = request.form['email']
         password = request.form['password']
 
-        # Mengecek keberadaan pengguna di database MongoDB
         user = db.dataregis.find_one({"email": email, "password": password})
 
         if user:
             session['email'] = email
-            session['first_name'] = user.get('first_name', '')  # Menyimpan first_name dalam sesi
-            session['last_name'] = user.get('last_name', '')  # Menyimpan last_name dalam sesi
-            session['role'] = user.get('role', 'user')  # Ambil peran pengguna atau beri nilai default 'user'
+            session['first_name'] = user.get('first_name', '')  # Nyimpan firstname
+            session['last_name'] = user.get('last_name', '')  # Nyimpang lastname
+            session['role'] = user.get('role', 'user')  # peran nya sebagai user
 
             flash(f'Welcome, {session["first_name"]} {session["last_name"]}!', 'success')
 
             if session['role'] == 'admin':
-                return redirect(url_for('admin_page'))  # Jika peran adalah 'admin', arahkan ke halaman admin
+                return redirect(url_for('admin_page'))  # Kalau peran nya admin, nnti diarahkan ke halaman admin
 
-            return redirect(url_for('home'))  # Jika peran adalah 'user', arahkan ke halaman home
+            return redirect(url_for('home'))  # Kalau peran nya user, nnti diarahkan ke halaman dashboard
         else:
             flash('Invalid email or password. Please try again.', 'danger')
 
@@ -191,7 +188,7 @@ def logout():
     session.pop('last_name', None)
     return redirect(url_for('home'))
 
-# contact
+# ------------------------------ Contact ------------------------------ #
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -206,14 +203,21 @@ def contact():
         return render_template('contact.html', email=session.get('email'))
     
 
+# ------------------------------ About ------------------------------ #
+
 
 @app.route('/about')
 def about_us():
     return render_template('about.html', email=session.get('email'))
 
+
+# ------------------------------ Gallery ------------------------------ #
+
 @app.route('/gallery')
 def gallery():
     return render_template('gallery.html', email=session.get('email'))
+
+
 
 @app.route('/book')
 def order():
@@ -221,6 +225,46 @@ def order():
         return redirect(url_for('signin'))
     else:
         return render_template('book.html')
+    
+# ------------------------------ Rooms ------------------------------ #
+
+@app.route('/rooms')
+def room():
+    articles = list(db.ListKamar.find({}, {'_id':False}))
+    return render_template('rooms.html', articles=articles)
+
+# ------------------------------ Booking ------------------------------ #
+
+@app.route('/booking')
+def booking():
+    articles = list(db.ListKamar.find({}, {'_id':False}))
+    return render_template('booking.html', articles=articles)
+
+@app.route('/submit_reservation', methods=['POST'])
+def submit_reservation():
+    data = request.get_json()
+
+    reservation_data = {
+        'entryDate': data['entryDate'],
+        'exitDate': data['exitDate'],
+        'numberOfPeople': data['numberOfPeople'],
+        'roomType': data['roomType'],
+        'ordererName': data['ordererName'],
+        'ordererEmail': data['ordererEmail'],
+        'ordererPhoneNumber': data['ordererPhoneNumber'],
+        'metodePembayaran': data['metodePembayaran'],
+        'harga': data['harga'],
+        'jumlah_hari': data['jumlah_hari']
+    }
+        
+    try:
+        db.reservation_collection.insert_one(reservation_data)
+        response = {'status': 'success', 'message': 'Reservation data saved successfully!'}
+    except Exception as e:
+        response = {'status': 'error', 'message': f'Error saving reservation dataa: {str(e)}'}
+
+    return jsonify(response)
+
 
 if __name__== '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

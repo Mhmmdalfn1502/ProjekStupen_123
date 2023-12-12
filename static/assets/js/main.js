@@ -39,7 +39,7 @@ function listing() {
                         </div>
                       </div>
                       <div>
-                        <button class="btn-booknow">Book Now</button>
+                        <a href="/booking" class="btn-booknow">Book Now</a>
                       </div>
                     </div>
                 </div>
@@ -96,14 +96,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.getElementById('bookButton').addEventListener('click', function() {
   // Kirim permintaan ke server untuk memeriksa status login
-  fetch('/book')
+  fetch('/booking')
       .then(response => {
           if (response.redirected) {
               // Jika server meredirect, arahkan pengguna ke halaman login
               window.location.href = '/signin';
           } else {
               // Jika tidak ada redirect, lanjutkan ke halaman pemesanan
-              window.location.href = '/book';
+              window.location.href = '/booking';
           }
       })
       .catch(error => console.error('Error:', error));
