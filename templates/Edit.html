@@ -9,6 +9,8 @@
     <meta property="og:Price" content="Summary of the contents of the page you are viewing" />
     <meta property="og:image" content="{{ url_for('static', filename='ogimage.png') }}" />
 
+    <link rel="stylesheet" href="../static/assets/dist/fontawesome/css/all.min.css" />
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
@@ -26,14 +28,61 @@
     <title>Harmony Resort</title>
   </head>
   <body>
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand mx-auto" href="#">Harmony Resort</a>
-            <div class="navbar-text ml-auto">
-                Admin
-            </div>
+
+    <div class="page">
+
+      <aside class="sidebar">
+        <header>
+          <img src="../static/assets/img/LogoHarmonyGolden.png" alt="">
+          <span style="color: white;">Harmony Resort</span>
+        </header>
+        <button  class="nav-link active" >
+          <i class="fa-solid fa-home"></i>
+          <a class="nav-link" href="">Home</a>
+        </button>
+        <button class="nav-link" onclick="handleClick('tools')">
+          <i class="fa-solid fa-file"></i>
+          <a class="nav-link">Reservation</a>
+          <!-- <i class="fa-solid fa-arrow-alt-circle-down"></i> -->
+        </button>
+        <button class="nav-link">
+          <i class="fa-solid fa-contact-book"></i>
+          <a class="nav-link" href="/Review-admin">Review</a>
+        </button>
+      <!-- <div class="subnav" id="tools">
+        <div class="subnav-inner">
+          <button>
+            <span>document</span>
+          </button>
         </div>
-    </nav>
+      </div> -->
+        <button>
+        <a href="/logout" class="btn-SignOut">Logout</a>
+        <i class="fa-solid fa-sign-out"></i>
+      </button>
+  
+      </aside>
+
+    <div class="main-content">
+
+      <nav class="navbar">
+        <div class="container">
+          <img class="logo" src="../static/assets/img/LogoHarmonyGolden.png" alt="" />
+          <span class="navbar-brand mx-auto" href="#" style="font-weight: bold"></span>
+          <div class="text-center auth">
+            {% if 'email' in session %}
+                <p class="user-profile">Hallo, {{ session['first_name'] }} {{ session['last_name'] }}</p>
+                {% if session['role'] == 'admin' %}
+                {% endif %}
+            {% else %}
+                <a href="/signin" class="btn-SignIn text-decoration-none">Sign In</a>
+                <a href="/signup" class="btn-SignUp text-decoration-none">Sign Up</a>
+            {% endif %}
+        </div>
+        </div>
+      </nav>
+
+
     <div class="container mt-5">
       <form id="edit-form" enctype="multipart/form-data">
         <div class="mb-3">
@@ -50,6 +99,10 @@
         <button type="button" class="btn btn-primary" onclick="saveEdit()" class="fas fa-save">Save Changes</button>
       </form>
     </div>
+
+  </div>
+
+</div>
 
     <script>
       function fillEditForm(data) {
@@ -91,6 +144,52 @@
     });
 }
 
+    // Ini Sidebar
+
+    const subNavs =
+        document.querySelectorAll(
+            `.subnav`
+          );
+      const buttons =
+        document.querySelectorAll(
+          `.sidebar button`
+        );
+
+      const resetSidebar = () => {
+        subNavs.forEach((nav) => {
+          nav.style.height = 0;
+        });
+
+        buttons.forEach(btn => {
+          btn.classList.remove("active");
+        });
+      };
+
+      const handleClick = subNav => {
+        resetSidebar();
+
+        const subNavOuter = 
+          document.querySelector(`#${subNav}`);
+
+        const subNavInner =
+        document.querySelector(
+          `#${subNav} .subnav-inner`
+        );
+
+        const button =
+        subNavOuter.previousElementSibling;
+
+        if (subNavOuter.clientHeight > 0) {
+          button.classList.remove("active");
+          subNavOuter.style.height = 0;
+        } else {
+          button.classList.add("active");
+          subNavOuter.style.height =
+          `${subNavInner.clientHeight}px`;
+        }
+      };
+
     </script>
+
   </body>
 </html>

@@ -35,75 +35,75 @@
   color: var(--color-text);
 }
 
-/* start navbar */
-.navbar {
-  padding: 20px 0px;
-  background-color: white;
-}
+  /* start navbar */
+  .navbar {
+    padding: 20px 0px;
+    background-color: white;
+  }
+  
+  .navbar .navbar-nav .nav-link {
+    color: var(--third-color);
+    font-size: 20px;
+    padding: 14px 16px;
+  }
+  
+  .navbar .navbar-nav .nav-link.active {
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+  
+  .navbar .navbar-nav .nav-link:hover {
+    color: var(--secondary-color);
+    font-weight: 600;
+  }
+  
+  .nav-user {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+  
+  .nav-user p {
+    font-size: medium;
+    font-weight: bold;
+    color: #002403;
+  }
+  
+  .nav-user a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #118855;
+  }
+  
+  .auth .btn-SignIn {
+    padding: 10px 25px;
+    background-color: transparent;
+    border: 2px solid #24ab70;
+    color: #24ab70;
+    font-weight: bold;
+    border-radius: 25px;
+    text-decoration: none;
+  }
+  
+  .auth .btn-SignUp {
+    padding: 10px 25px;
+    background-color: #24ab70;
+    color: white;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+  }
+  
+  .btn-SignIn:hover {
+    border-color: #118855;
+    color: #118855;
+  }
+  
+  .btn-SignUp:hover {
+    background-color: #118855;
+  }
 
-.navbar .navbar-nav .nav-link {
-  color: var(--third-color);
-  font-size: 20px;
-  padding: 14px 16px;
-}
-
-.navbar .navbar-nav .nav-link.active {
-  color: var(--secondary-color);
-  font-weight: 600;
-}
-
-.navbar .navbar-nav .nav-link:hover {
-  color: var(--secondary-color);
-  font-weight: 600;
-}
-
-.nav-user {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-}
-
-.nav-user p {
-  font-size: medium;
-  font-weight: bold;
-  color: #002403;
-}
-
-.nav-user a {
-  font-weight: bold;
-  text-decoration: none;
-  color: #118855;
-}
-
-.auth .btn-SignIn {
-  padding: 10px 25px;
-  background-color: transparent;
-  border: 2px solid #24ab70;
-  color: #24ab70;
-  font-weight: bold;
-  border-radius: 25px;
-  text-decoration: none;
-}
-
-.auth .btn-SignUp {
-  padding: 10px 25px;
-  background-color: #24ab70;
-  color: white;
-  font-weight: bold;
-  border-radius: 25px;
-  border: none;
-}
-
-.btn-SignIn:hover {
-  border-color: #118855;
-  color: #118855;
-}
-
-.btn-SignUp:hover {
-  background-color: #118855;
-}
-
-/* end navbar */
+  /* end navbar */
 
 .collapse {
   display: flex;

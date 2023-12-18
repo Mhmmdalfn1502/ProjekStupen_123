@@ -87,7 +87,7 @@
     <!-- Booking -->
     <section class="booking animate__animated animate__fadeInLeft animate__delay-0.5s">
       <div class="container">
-        <div class="row justify-content-center">
+        <form class="row justify-content-center" action="/booking" method="post">
           <div class="col-lg-11">
             <div class="row boxheader align-items-center justify-content-between">
               <div class="boxform col-lg-2">
@@ -104,19 +104,16 @@
               </div>
               <div class="boxform col-lg-2">
                 <label for="">ROOM</label>
-                <select id="room" name="fruit">
+                <select id="room" name="room">
                   <option value="apple">Single Room</option>
-                  <option value="banana">Deluxe Room</option>
-                  <option value="orange">Double Room</option>
-                  <option value="grape">Expert Roomk</option>
                 </select>
               </div>
               <div class="boxform col-lg-4">
-                <button id="bookButton" class="btn-book">Booking Now</button>
+                <button id="bookButton" class="btn-book" type="submit">Booking Now</button>
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </section>
     <!-- Booking -->
@@ -132,7 +129,7 @@
         </div>
         <div class="row">
           {% for article in articles %}
-          <div class="col-lg-4 mb-5" data-aos="fade-up" data-aos-duration="2000">
+          <div class="col-lg-4 mb-5" data-aos="fade-up" data-aos-duration="1000">
             <div class="card">
               <img src="{{article.file}}" class="img-room">
               <div class="content d-flex justify-content-between align-items-end">

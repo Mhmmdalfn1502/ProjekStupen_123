@@ -54,6 +54,37 @@ function listing() {
 $(document).ready(function () {
   get_room_names();
   bsCustomFileInput.init();
+
+  
+    // Menanggapi pengiriman formulir
+    $("#bookingForm").submit(function (e) {
+      e.preventDefault();
+  
+      // Mengambil data formulir
+      var formData = {
+        entryDate: $("#date").val(),
+        exitDate: $("#date").val(),
+        numberOfPeople: $("input[name='numberOfPeople']").val(),
+        roomType: $("#room").val(),
+        // ... (Tambahkan bidang formulir lainnya)
+      };
+  
+      // Mengirim data melalui AJAX
+      $.ajax({
+        type: "POST",
+        url: "/submit_reservation",
+        contentType: "application/json;charset=UTF-8",
+        data: JSON.stringify(formData),
+        success: function (response) {
+          console.log(response);
+          // Handle respons sesuai kebutuhan Anda
+        },
+        error: function (error) {
+          console.log(error);
+          // Handle error sesuai kebutuhan Anda
+        },
+      });
+    });
 });
 
 function get_room_names() {
@@ -75,6 +106,11 @@ function get_room_names() {
       },
   });
 }
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
   const passwordToggleIcons = document.querySelectorAll('.password-toggle-icon');
@@ -108,6 +144,22 @@ document.getElementById('bookButton').addEventListener('click', function() {
       })
       .catch(error => console.error('Error:', error));
 });
+
+
+function deleteItem(name) {
+  if (confirm('Are you sure you want to delete this contact?')) {
+    $.ajax({
+      type: 'DELETE',
+      url: `/delete-contact/${name}`,
+      success: function(response) {
+        alert(response.message);
+      },
+      error: function(error) {
+        console.error('Error deleting contact:', error);
+      }
+    });
+  }
+}
 
 // $(document).ready(function () {
 //   get_list_review();

@@ -146,10 +146,9 @@
 
   .cntct-hotel {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     align-items: start;
-    justify-content: center;
   }
   
   .cntct-hotel li {
@@ -166,6 +165,9 @@
     font-size: 18px;
   }
 
+  iframe {
+    max-width: 100vw;
+  }
 
     /* Start Footer */
     footer {

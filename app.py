@@ -2,7 +2,9 @@ from flask import Flask, render_template, jsonify, request, url_for, session, re
 from pymongo import MongoClient
 from pymongo import DESCENDING
 from datetime import datetime
+from bson import ObjectId
 import os
+import re
 
 connection_string = 'mongodb+srv://mhmmdalfn1502:Alfanaja@cluster0.hh8koxv.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp'
 client = MongoClient(connection_string)
@@ -106,44 +108,72 @@ def admin_page():
 def signup_page():
     return render_template('signup.html')
 
-@app.route('/signup', methods=['POST'])
+def is_valid_password(password):
+    """
+    Validasi password memenuhi persyaratan:
+    - Minimal satu huruf besar
+    - Minimal satu huruf kecil
+    - Minimal satu angka
+    """
+    return bool(re.match(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$', password)) and len(password) >= 8
+
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
+    signup_data = {} 
+
     if request.method == 'POST':
+        session['signup_data'] = request.form
+
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         email = request.form['email']
         password = request.form['password']
         confirm_password = request.form['confirm_password']
 
-        # Validasi password dan konfirmasi password
+        # Validasi dan konfirmasi password
         if password != confirm_password:
-            flash({'Password and Confirm Password do not match'})
-            return render_template('signup.html')
-        
-        # Mengecek apakah alamat email sudah terdaftar
+            flash('Password and Confirm Password do not match', 'danger')
+            return render_template('signup.html', signup_data=signup_data)
+
+        # Validasi password sesuai persyaratan
+        if not is_valid_password(password):
+            flash('Password must contain at least one uppercase letter, and one digit. Minimum length is 8 characters.', 'danger')
+            return render_template('signup.html', signup_data=signup_data)
+
+        # Mengecek alamat email sudah terdaftar atau belum
         existing_user = db.dataregis.find_one({'email': email})
         if existing_user:
             flash('Email is already registered. Please use a different email.', 'danger')
-            return render_template('signup.html')
+            return render_template('signup.html', signup_data=signup_data)
+
+        # Menentukan peran pengguna
+        role = "user"  # Default role
+        admin_emails = ["Admin1@HarmonyResort.com", "Admin2@HarmonyResort.com"]
+        if email in admin_emails:
+            role = "admin"
 
         db.dataregis.insert_one({
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
             "password": password,
-            "role": "user"  # Perannya sebagai User
+            "role": role
         })
 
-        # Otentikasi pengguna lewat email
         session['email'] = email
 
-        # Jika SignUp/SignIn sebagai admin harus menggunakan email ini
-        if email == "admin@HarmonyResort.com":
+        if email in admin_emails:
             session['role'] = "admin"
+
+        session.pop('signup_data', None)
 
         return redirect(url_for('signin'))
 
-    return render_template('signup.html')
+    if 'signup_data' in session:
+        signup_data = session['signup_data']
+        session.pop('signup_data')
+
+    return render_template('signup.html', signup_data=signup_data)
 
 @app.route('/signin', methods=['POST', 'GET'])
 def signin():
@@ -156,10 +186,8 @@ def signin():
         if user:
             session['email'] = email
             session['first_name'] = user.get('first_name', '')  # Nyimpan firstname
-            session['last_name'] = user.get('last_name', '')  # Nyimpang lastname
+            session['last_name'] = user.get('last_name', '')  # Nyimpan lastname
             session['role'] = user.get('role', 'user')  # peran nya sebagai user
-
-            flash(f'Welcome, {session["first_name"]} {session["last_name"]}!', 'success')
 
             if session['role'] == 'admin':
                 return redirect(url_for('admin_page'))  # Kalau peran nya admin, nnti diarahkan ke halaman admin
@@ -202,6 +230,23 @@ def contact():
     else:
         return render_template('contact.html', email=session.get('email'))
     
+# ------------------------------ Review ------------------------------ #
+
+@app.route('/Review-admin', methods = ['GET'])
+def review_admin():
+    contacts = list(db.contacts.find())
+    return render_template('Review.html', contacts=contacts)
+
+@app.route('/delete-contact/<name>', methods=['DELETE'])
+def delete_contact(name):
+    try:
+        result = db.contacts.delete_one({'name': name})
+        if result.deleted_count == 1:
+            return jsonify({'message': 'Contact deleted successfully'})
+        else:
+            return jsonify({'message': 'Contact not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 # ------------------------------ About ------------------------------ #
 
@@ -235,6 +280,7 @@ def room():
 
 # ------------------------------ Booking ------------------------------ #
 
+
 @app.route('/booking')
 def booking():
     articles = list(db.ListKamar.find({}, {'_id':False}))
@@ -264,6 +310,36 @@ def submit_reservation():
         response = {'status': 'error', 'message': f'Error saving reservation dataa: {str(e)}'}
 
     return jsonify(response)
+
+# ------------------------------ Reservation ------------------------------ #
+
+@app.route("/Reservation-admin", methods=['GET'])
+def reservation():
+    reservations = list(db.reservation_collection.find())
+    return render_template('reservation.html', reservations=reservations)
+
+@app.route('/delete-reservation/<reservation_id>', methods=['DELETE'])
+def delete_reservation(reservation_id):
+    try:
+        result = db.reservation_collection.delete_one({'_id': ObjectId(reservation_id)})
+        if result.deleted_count == 1:
+            return jsonify({'message': 'Reservation deleted successfully'})
+        else:
+            return jsonify({'message': 'Reservation not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+# @app.route('/delete-contact/<name>', methods=['DELETE'])
+# def delete_contact(name):
+#     try:
+#         result = db.contacts.delete_one({'name': name})
+#         if result.deleted_count == 1:
+#             return jsonify({'message': 'Contact deleted successfully'})
+#         else:
+#             return jsonify({'message': 'Contact not found'}), 404
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 
 if __name__== '__main__':
