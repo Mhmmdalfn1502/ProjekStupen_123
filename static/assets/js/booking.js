@@ -4,8 +4,10 @@ $(function () {
     $("#exitDate").datepicker();
 });
 
+
 var ringkasanDiv = document.querySelector('.ringkasan');
 var saveBtn = document.querySelector('.save-btn');
+
 function submitReservation() {
     // Get form data
     const entryDate = new Date($("#entryDate").val());
@@ -178,4 +180,6 @@ function booking() {
             alert("Error submitting reservation. Please try again.");
         },
     });
+
+    window.location.href = "/";
 }

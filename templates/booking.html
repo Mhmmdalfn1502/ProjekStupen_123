@@ -210,7 +210,7 @@
                                 </div>
                                 <div class="save-btn">
                                     <button class="btn-booknow" type="button"
-                                        onclick="submitReservation()">SAVE</button>
+                                        onclick="checkLoginAndSubmit()">SAVE</button>
 
                                 </div>
                             </div>
@@ -268,7 +268,25 @@
 
         <!-- content end here brooo -->
 
-      
+        <script>
+            function checkLoginAndSubmit() {
+                // Cek apakah pengguna sudah login
+                {% if 'email' in session %}
+                    // Jika sudah login, panggil fungsi submitReservation
+                    submitReservation();
+                {% else %}
+                    // Jika belum login, redirect ke halaman login
+                    window.location.href = "/signin";
+                {% endif %}
+            }
+        
+            // Fungsi submitReservation tetap sama seperti sebelumnya
+            function submitReservation() {
+                // ... (kode submitReservation tetap sama) ...
+            }
+        
+            // ... (fungsi lainnya) ...
+        </script>
 
     <!-- start footer -->
 
