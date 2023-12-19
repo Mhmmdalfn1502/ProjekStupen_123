@@ -4,6 +4,8 @@ $(function () {
     $("#exitDate").datepicker();
 });
 
+var ringkasanDiv = document.querySelector('.ringkasan');
+var saveBtn = document.querySelector('.save-btn');
 function submitReservation() {
     // Get form data
     const entryDate = new Date($("#entryDate").val());
@@ -21,12 +23,26 @@ function submitReservation() {
 
 // tryy
 
-    if (roomType == 'standard') {
-        harga = 2000 * jumlah_hari
-    }
-    else {
-        harga = 17000 * jumlah_hari
-    }
+
+if (roomType == 'Deluxe Room') {
+    harga = (2000000 * jumlah_hari).toLocaleString()
+}
+if (roomType == 'Superior Room') {
+    harga = (2500000 * jumlah_hari).toLocaleString()
+}
+if (roomType == 'Twin Room') {
+    harga = (3500000 * jumlah_hari).toLocaleString()
+}
+if (roomType == 'Double Room') {
+    harga = (3800000 * jumlah_hari).toLocaleString()
+}
+if (roomType == 'Single Room') {
+    harga = (1500000 * jumlah_hari).toLocaleString()
+}
+else {
+    harga = (4500000 * jumlah_hari).toLocaleString()
+}
+
 
 
     var options = { weekday: 'short', month: 'short', day: 'numeric', year:'numeric' };
@@ -77,22 +93,39 @@ function submitReservation() {
                         <div class="ket">
                             <p>${formattedEntryDate} - ${formattedExitDate}</p>
                             <p>${numberOfPeople} People</p>
-                            <p class="fw fs-5">Total Price: ${harga}
+                            <p class="fw fs-5">Total Price: Rp ${harga}
                         </div>
-                        <div class="save-btn">
-                            <button class="btn-booknow" onclick="booking()">Book Now</button>
-                        </div>
+                        <div class="tombol-ajah">
+                                                    <div class="save-btn">
+                                                        <button class="btn-booknow" onclick="booking()">Book Now</button>
+                                                    </div>
+                                                    <div class="edit-btn">
+                                                        <button class="btn-edit" onclick="edit()">Edit</button>
+                                                    </div>
+                                                </div>
                     </div>
     `
 
-    var ringkasanDiv = document.querySelector('.ringkasan');
+    
     ringkasanDiv.style.display = 'block';
 
 
-    var saveBtn = document.querySelector('.save-btn');
+    
     saveBtn.style.display = 'none';
     }
     
+}
+
+function edit() {
+    ringkasanDiv.style.display = 'none';
+
+    var editBtn = document.querySelector('.edit-btn');
+    editBtn.style.display = 'none';
+
+
+    saveBtn.style.display = 'block';
+
+    document.documentElement.scrollTop = 0;
 }
 
 function booking() {

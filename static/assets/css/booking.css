@@ -241,6 +241,17 @@ footer {
   font-weight: bold;
 }
 
+.btn-edit {
+  background-color: #eabd28;
+  color: white;
+  border: none;
+  padding: 10px 35px;
+  border-radius: 10px;
+  height: 50px;
+  font-weight: bold;
+}
+
+
 .btn-booknow:hover {
   background-color: #118855;
 }
@@ -293,6 +304,12 @@ footer {
   font-size: 16px;
   font-weight: 400;
   color: #9d9daa;
+  margin-bottom: 20px;
+}
+
+.tombol-ajah {
+  display: flex;
+  gap: 20px;
 }
 
 /* tryy */
