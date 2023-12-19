@@ -85,10 +85,10 @@
             <div class="col-4">
                 <div class="left-content">
                     <div class="image">
-                        <img src="../static/assets/img/bed333.avif" alt="">
+                        <img src="{{selected_room.file}}" alt="">
                     </div>
-                    <p class="name">Single Room</p>
-                    <p class="price">Rp. 1.200.000</p>
+                    <p class="name">{{selected_room.Name}}</p>
+                    <p class="price">Rp {{selected_room.Price}}</p>
                     <div class="facility">
                         <div class="left">
                             <div class="wifi">
@@ -186,10 +186,7 @@
                                 <div class="check-in">
                                     <form id="reservationForm" action="/submit-form" method="post" class="form-group">
                                         <label for="roomType" class="form-label align-content-start">ROOM</label>
-                                        <select id="roomType" name="roomType" class="form-control">
-                                            <option value="standard">Standard</option>
-                                            <option value="deluxe">Deluxe</option>
-                                        </select>
+                                        <input type="text" id="roomType" class="form-control" name="roomType" value="{{selected_room.Name}}">
                                     </form>
                                 </div>
                                 <div class="check-in">
@@ -200,6 +197,7 @@
                                             name="ordererPhoneNumber">
                                     </form>
                                 </div>
+                        
                                 <div class="check-in">
                                     <form id="reservationForm" action="/submit-form" method="post" class="form-group">
                                         <label for="roomType" class="form-label align-content-start">PAYMENT

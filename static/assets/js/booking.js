@@ -34,7 +34,12 @@ function submitReservation() {
     var formattedExitDate = exitDate.toLocaleDateString('en-US', options);
 
     var resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `
+
+    if (entryDate === "" || numberOfPeople === "" || ordererName === "" || ordererEmail === "" || exitDate === "" || roomType === "" || ordererPhoneNumber === "" || metodePembayaran === "") {
+        // Tampilkan alert jika ada form yang kosong
+        alert("Mohon lengkapi semua field!");
+    } else {
+        resultDiv.innerHTML = `
     <div class="title">
                         <p>Your Stay</p>
                     </div>
@@ -86,6 +91,8 @@ function submitReservation() {
 
     var saveBtn = document.querySelector('.save-btn');
     saveBtn.style.display = 'none';
+    }
+    
 }
 
 function booking() {

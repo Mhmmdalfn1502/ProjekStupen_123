@@ -91,7 +91,7 @@
                   </div>
                   <div>
                     <!-- Mengubah button menjadi anchor tag -->
-                    <a href="/booking" class="btn-booknow" style="text-decoration: none;">Book Now</a>
+                    <a href="{{ url_for('booking', room_type=article.Name) }}" class="btn-booknow" style="text-decoration: none;">Book Now</a>
                   </div>
                 </div>
               </div>

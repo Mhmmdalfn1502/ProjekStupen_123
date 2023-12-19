@@ -281,10 +281,13 @@ def room():
 # ------------------------------ Booking ------------------------------ #
 
 
-@app.route('/booking')
-def booking():
+@app.route('/booking/<room_type>')
+def booking(room_type):
     articles = list(db.ListKamar.find({}, {'_id':False}))
-    return render_template('booking.html', articles=articles)
+    selected_room = next((room for room in articles if room['Name'] == room_type), None)
+    if not selected_room:
+        return "Room not found", 404
+    return render_template('booking.html', selected_room=selected_room, articles=articles)
 
 @app.route('/submit_reservation', methods=['POST'])
 def submit_reservation():
